@@ -1274,6 +1274,11 @@ section{position:relative;z-index:1;}
   z-index:-1;
   opacity:0.2;
 }
+@media(max-width:480px){
+  .gallery-upload-box{
+    padding:20px 16px;
+  }
+}
 .gallery-admin-btn{
   position:absolute;
   top:14px;right:14px;
@@ -1305,13 +1310,23 @@ section{position:relative;z-index:1;}
   transition:border-color 0.25s, background 0.25s;
   background:var(--cream);
   position:relative;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
 }
-.gallery-upload-drop:hover,.gallery-upload-drop.drag-over{
+.gallery-upload-drop:hover,.gallery-upload-drop.drag-over,
+.gallery-upload-drop:focus-within{
   border-color:var(--honey);
   background:rgba(242,169,59,0.06);
 }
 .gallery-upload-drop input[type="file"]{
   position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
+  touch-action:manipulation;
+}
+@media(max-width:480px){
+  .gallery-upload-drop{
+    padding:22px 12px;
+  }
+  .gallery-upload-icon{font-size:2rem!important;}
 }
 .gallery-upload-icon{font-size:2.4rem;margin-bottom:8px;display:block;}
 .gallery-upload-text{
@@ -1331,9 +1346,11 @@ section{position:relative;z-index:1;}
   display:flex;
   gap:10px;
   align-items:stretch;
+  flex-wrap:wrap;
 }
 .gallery-name-input{
   flex:1;
+  min-width:0;
   font-family:'Nunito',sans-serif;
   border:2px solid var(--cream-deep);
   background:var(--cream);
@@ -1342,28 +1359,6 @@ section{position:relative;z-index:1;}
   font-size:0.95rem;
   color:var(--brown-deep);
   transition:border-color 0.2s,box-shadow 0.2s;
-
-  @media (max-width: 480px){
-  .gallery-name-row{
-    flex-direction:column;
-    align-items:flex-start;
-    gap:12px;
-  }
-
-  .gallery-name-input{
-    width:100%;
-  }
-
-  .gallery-upload-btn{
-    width:auto;
-    align-self:flex-start;
-    margin-left:-10px;
-    padding:12px 16px;
-    font-size:0.95rem;
-    white-space:nowrap;
-  }
-}
-
 }
 
 .gallery-name-input:focus{
@@ -1385,13 +1380,35 @@ section{position:relative;z-index:1;}
   box-shadow:0 6px 18px rgba(255,112,67,0.3);
   transition:transform 0.2s,box-shadow 0.2s;
   position:relative;overflow:hidden;
+  flex-shrink:0;
 }
 .gallery-upload-btn::before{
   content:'';position:absolute;inset:0;
   background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);
 }
 .gallery-upload-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,112,67,0.4);}
+.gallery-upload-btn:active{transform:translateY(0) scale(0.98);}
 .gallery-upload-btn:disabled{opacity:0.55;transform:none;cursor:default;}
+
+@media(max-width:480px){
+  .gallery-name-row{
+    flex-direction:column;
+    gap:10px;
+  }
+  .gallery-name-input{
+    width:100%;
+  }
+  .gallery-upload-btn{
+    width:100%;
+    padding:14px 20px;
+    font-size:1.05rem;
+    text-align:center;
+    justify-content:center;
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+}
 .gallery-preview-row{
   display:flex;
   gap:10px;
@@ -2352,7 +2369,7 @@ document.getElementById('gallery-admin-btn').addEventListener('click', function 
           <input type="text" class="gallery-name-input" id="gallery-name-input"
             placeholder="Nama kamu (contoh: Oom Budi) 🌸" maxlength="40" autocomplete="off">
           <button type="button" class="gallery-upload-btn" id="gallery-upload-submit">
-            Upload 
+            📤 Upload Foto
           </button>
         </div>
 
@@ -2961,7 +2978,7 @@ renderWishes();
       saveGallery(list);
       pendingFile=null; previewRow.classList.remove('show');
       previewThumb.src=''; if(fileInput) fileInput.value=''; nameInput.value='';
-      submitBtn.disabled=false; submitBtn.textContent='Upload Foto 📸';
+      submitBtn.disabled=false; submitBtn.textContent='📤 Upload Foto';
       galleryMsg.textContent='🎉 Foto tersimpan! Terima kasih '+escHtml(name)+' 💛';
       galleryMsg.className='gallery-msg ok';
       setTimeout(function(){ galleryMsg.textContent=''; galleryMsg.className='gallery-msg'; }, 3200);
